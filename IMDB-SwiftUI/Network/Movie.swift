@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Movie: Decodable {
     let title: String

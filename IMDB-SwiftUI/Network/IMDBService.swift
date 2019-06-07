@@ -15,7 +15,7 @@ enum IMDBService {
 
 extension IMDBService: TargetType {
     var apiKey:String {
-        return "API_KEY"
+        return "739eed14bc18a1d6f5dacd1ce6c2b29e"
     }
     var baseURL: URL {
         return URL(string:"https://api.themoviedb.org/3")!

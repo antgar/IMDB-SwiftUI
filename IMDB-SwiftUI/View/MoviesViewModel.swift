@@ -12,19 +12,17 @@ import Combine
 
 final class MoviesViewModel: BindableObject {
     private let movieAPI = IMDBDataService()
-    var didChange = PassthroughSubject<MoviesViewModel, Never>()
-    private lazy var moviesAssign = Subscribers.Assign(object: self, keyPath: \.movies)
+    var cancellable: Cancellable?
+    let didChange = PassthroughSubject<Void, Never>()
     private(set) var movies: [Movie] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.didChange.send(self)
-            }
+            self.didChange.send(())
         }
     }
     
     init() {
-        movieAPI.getPopular()
+        cancellable = movieAPI.getPopular()
         .replaceError(with: [])
-        .receive(subscriber: moviesAssign)
+        .assign(to: \.movies, on: self)
     }
 }
